@@ -6,8 +6,8 @@ This repository contains curated Indicators of Compromise (IOCs) associated with
 
 | File              | Description                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
-| `ips.txt`         | List of IP addresses associated with ToolShell C2 infrastructure, scanning activity, or exploitation attempts. |
-| `file_hashes.txt` | List of known malicious file hashes (e.g., executables, scripts) linked to ToolShell. |
+| `toolshell_ips.txt`         | List of IP addresses associated with ToolShell C2 infrastructure, scanning activity, or exploitation attempts. |
+| `webshell_sha256.txt` | List of known malicious file hashes (e.g., executables, scripts) linked to ToolShell. |
 
 ## 📌 Usage
 
