@@ -11,7 +11,7 @@ This folder tracks **high-risk indicators of compromise (IoCs) first observed in
 |------|---------|
 | `toolshell/` | Indicators linked to the **SharePoint “ToolShell” exploitation wave** (CVE-2025-53770/-53771) – IPs, SHA-256 file hashes, and more.
 | `autocolor/` | Indicators linked to the **"Autocolor" Linux RAT** – IPs, SHA-256 file hashes, and more.
-|`react2shell` | Indicators linked to the **"react2shell" exploitation wave** (CVE-2025-55182) - IPs, domains, and more.
+| `react2shell/` | Indicators linked to the **"react2shell" exploitation wave** (CVE-2025-55182) - IPs, domains, and more.
 
 > **Why start with ToolShell?**  
 > The July 2025 campaigns were one of the most active zero-day exploitations of the year, with widespread web-shell drops and beaconing to hard-coded command-and-control hosts:contentReference[oaicite:1]{index=1}. Consolidating those IoCs here lets defenders react faster than vendor threat-feeds usually update.
