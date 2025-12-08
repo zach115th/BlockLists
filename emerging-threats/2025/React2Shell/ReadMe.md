@@ -1,0 +1,2 @@
+##React2Shell
+-A vulnerability exists in React Server Components (also known as React.js or ReactJS), an open-source front-end JavaScript library for building user interfaces.  The vulnerability allows an attacker to remotely execute arbitrary code on an unpatched server. An unauthenticated remote attacker could craft a malicious HTTP request to any Server Function endpoint that, when deserialized by React, achieves remote code execution on the server. Exploit code is publicly available.  Exploitation is actively occurring.
