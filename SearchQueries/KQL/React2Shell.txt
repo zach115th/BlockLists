@@ -1,0 +1,122 @@
+DeviceProcessEvents
+| where ParentFileName =~ "node.exe"
+| where ParentProcessCommandLine has_any (
+    "--experimental-https",
+    "--experimental-next-config-strip-types",
+    @"\node_modules\next",
+    "next dev",
+    "next start",
+    "next\" start",
+    @"node_modules\.bin\..\next",
+    "react-scripts start",
+    "start-server.js"
+)
+| where
+(
+    // selection_generic_child_img
+    FileName in~ (
+        "bash.exe",
+        "bitsadmin.exe",
+        "certutil.exe",
+        "cscript.exe",
+        "curl.exe",
+        "ipconfig.exe",
+        "mshta.exe",
+        "net.exe",
+        "net1.exe",
+        "netsh.exe",
+        "nslookup.exe",
+        "OpenConsole.exe",
+        "perl.exe",
+        "ping.exe",
+        "powershell.exe",
+        "pwsh.exe",
+        "py.exe",
+        "python.exe",
+        "pythonw.exe",
+        "pyw.exe",
+        "reg.exe",
+        "regsvr32.exe",
+        "rundll32.exe",
+        "sc.exe",
+        "sh.exe",
+        "systeminfo.exe",
+        "wget.exe",
+        "whoami.exe",
+        "wmic.exe",
+        "wscript.exe",
+        "wt.exe"
+    )
+    or FolderPath has @"\python"
+    
+    // selection_specific_cmd (cmd.exe without default shell flags)
+    or (
+        FileName =~ "cmd.exe"
+        and not(ProcessCommandLine has "/d /s /c ")
+    )
+
+    // selection_specific_cli AND suspicious CLI patterns
+    or (
+        ProcessCommandLine has "/d /s /c "
+        and ProcessCommandLine has_any (
+            " bitsadmin",
+            "certutil ",
+            "conhost --headless",
+            "cscript ",
+            "curl",
+            "ipconfig",
+            "java",
+            "lua",
+            "mshta",
+            "netsh",
+            "nslookup ",
+            "perl",
+            "ping ",
+            "powershell",
+            "pwsh",
+            "python",
+            "reg ",
+            "reg.exe",
+            "regsvr32",
+            "ruby",
+            "rundll32",
+            "sc.exe",
+            "systeminfo",
+            "wget",
+            "whoami",
+            "wmic",
+            "wscript"
+        )
+        // Sigma filters
+        and not(ProcessCommandLine has "git config --local --get remote.origin.url")
+        and not(
+            ProcessCommandLine has_all (
+                "netstat -ano | findstr /C:",
+                " | findstr LISTENING"
+            )
+        )
+        and not(
+            ProcessCommandLine has_all (
+                @"\mkcert\",
+                " -install "
+            )
+        )
+        and not(
+            ProcessCommandLine has_all (
+                @"\mkcert\",
+                " -CAROOT"
+            )
+        )
+    )
+)
+| project
+    Timestamp,
+    DeviceName,
+    AccountName,
+    ParentFileName,
+    ParentProcessCommandLine,
+    FileName,
+    FolderPath,
+    ProcessCommandLine,
+    InitiatingProcessId,
+    ProcessId
